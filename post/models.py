@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from account.models import User
 
@@ -26,9 +27,13 @@ class Post(models.Model):
     date_created = models.DateField(verbose_name='Yaratilgan sana', auto_now_add=True)
     date_update = models.DateField(verbose_name='Yangilangan sana', auto_now=True)
     video = models.FileField(verbose_name='Video', blank=True, upload_to='Media/Post/videos/')
+    url = models.SlugField(max_length=250, unique=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.url})
 
     class Meta:
         verbose_name = 'Post'

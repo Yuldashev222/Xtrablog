@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ new.title }}{% endblock %}
+{#{% block title %}{{ post.title }}{% endblock %}#}
 {% block nav_active %}
   <nav class="tm-nav" id="tm-nav">
     <ul>
@@ -27,7 +27,7 @@
   <div class="row tm-row mb-5">
     <div class="col-24">
       <div class="tm-post-link-inner" style="height: 600px; width: 1200px">
-        <img src="{{ new.image.url }}" width="1200px" alt="Image" class="img-fluid">
+        <img src="{{ post.img.url }}" width="1200px" alt="Image" class="img-fluid">
       </div>
     </div>
   </div>
@@ -35,12 +35,12 @@
     <div class="col-lg-8 tm-post-col">
       <div class="tm-post-full">
         <div class="mb-4">
-          <h2 class="pt-2 tm-color-primary tm-post-title">{{ new.title }}</h2>
-          <p class="tm-mb-40">{{ new.date }} posted by Admin Nat</p>
+          <h2 class="pt-2 tm-color-primary tm-post-title">{{ post.title }}</h2>
+          <p class="tm-mb-40">{{ post.date }} posted by Admin Nat</p>
           <p>
-            {{ new.text }}
+            {{ post.text }}
           </p>
-          <span class="d-block text-right tm-color-primary">{{ new.category }}</span>
+          <span class="d-block text-right tm-color-primary">{{ post.category }}</span>
         </div>
 
         <!-- Comments -->

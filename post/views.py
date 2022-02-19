@@ -16,6 +16,17 @@ class PostsView(View):
         return render(request, 'post/index.html', context=context)
 
 
+class PostDetailView(View):
+    """ Post single """
+
+    def get(self, request, slug):
+        post = Post.objects.get(url=slug)
+        context = {
+            'post': post,
+        }
+        return render(request, 'post/post.html', context=context)
+
+
 class AboutView(View):
     """ About """
 
@@ -45,4 +56,4 @@ class PostView(View):
             'title': 'Post',
             'posts': posts,
         }
-        return render(request, 'post.html', context=context)
+        return render(request, 'post/post.html', context=context)
