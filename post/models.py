@@ -1,6 +1,3 @@
-import datetime
-from time import timezone
-
 from django.db import models
 
 from account.models import User
@@ -26,7 +23,7 @@ class Post(models.Model):
     title = models.CharField(verbose_name='Sarlavha', max_length=250)
     text = models.TextField(verbose_name='Post mazmuni')
     image = models.ImageField(verbose_name='Rasmi', upload_to='Media/Post/images/')
-    date_crated = models.DateField(verbose_name='Yaratilgan sana', auto_now_add=True)
+    date_created = models.DateField(verbose_name='Yaratilgan sana', auto_now_add=True)
     date_update = models.DateField(verbose_name='Yangilangan sana', auto_now=True)
     video = models.FileField(verbose_name='Video', blank=True, upload_to='Media/Post/videos/')
 

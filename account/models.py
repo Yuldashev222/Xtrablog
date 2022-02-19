@@ -14,7 +14,7 @@ class User(AbstractUser):
 
 
 class Employee(models.Model):
-    user = models.ForeignKey(User, verbose_name='Xodim', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.OneToOneField(User, verbose_name='Xodim', on_delete=models.SET_NULL, null=True, blank=True)
 
     name = models.CharField(verbose_name='ismi', max_length=100)
     info = models.TextField(verbose_name='bio', blank=True)

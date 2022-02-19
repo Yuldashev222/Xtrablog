@@ -1,10 +1,10 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}{{ new.title }}{% endblock %}
 {% block nav_active %}
   <nav class="tm-nav" id="tm-nav">
     <ul>
-      <li class="tm-nav-item"><a href="{% url 'home' %}" class="tm-nav-link">
+      <li class="tm-nav-item"><a href="{% url 'posts' %}" class="tm-nav-link">
         <i class="fas fa-home"></i>
         Blog Home
       </a></li>
@@ -96,21 +96,7 @@
     </div>
     <aside class="col-lg-4 tm-aside-col">
       <div class="tm-post-sidebar">
-        <hr class="mb-3 tm-hr-primary">
-        {% if new.category_selected == 0 %}
-          <h2 class="mb-4 tm-post-title tm-color-primary selected">Categories</h2>
-        {% else %}
-          <h2 class="mb-4 tm-post-title tm-color-primary"><a href="{% url 'home' %}">Categories</a></h2>
-        {% endif %}
-        <ul class="tm-mb-75 pl-5 tm-category-list">
-          {% for i in new.categorys %}
-            {% if i.pk == new.category_selected %}
-              <li><a href="#" class="tm-color-primary selected">{{ i.name }}</a></li>
-            {% else %}
-              <li><a href="{{ i.get_absolute.url }}" class="tm-color-primary">{{ i.name }}</a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
+
         <hr class="mb-3 tm-hr-primary">
         <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
         <a href="#" class="d-block tm-mb-40">

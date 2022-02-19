@@ -1,10 +1,10 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ title }}{% endblock %}
+{#{% block title %}{{ title }}{% endblock %}#}
 {% block nav_active %}
   <nav class="tm-nav" id="tm-nav">
     <ul>
-      <li class="tm-nav-item"><a href="{% url 'home' %}" class="tm-nav-link">
+      <li class="tm-nav-item"><a href="{% url 'posts' %}" class="tm-nav-link">
         <i class="fas fa-home"></i>
         Blog Home
       </a></li>
