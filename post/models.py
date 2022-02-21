@@ -27,7 +27,9 @@ class Post(models.Model):
     date_created = models.DateField(verbose_name='Yaratilgan sana', auto_now_add=True)
     date_update = models.DateField(verbose_name='Yangilangan sana', auto_now=True)
     video = models.FileField(verbose_name='Video', blank=True, upload_to='Media/Post/videos/')
+
     url = models.SlugField(max_length=250, unique=True)
+    active = models.BooleanField(verbose_name='Chop etilsin', default=False)
 
     def __str__(self):
         return self.title
@@ -41,18 +43,19 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, verbose_name='Avtor', on_delete=models.CASCADE, blank=True)
-    post = models.ForeignKey(Category, verbose_name='Kategoriyasi', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='Avtor', on_delete=models.CASCADE, blank=True, null=True)
+    post = models.ForeignKey(Post, verbose_name='Post', related_name='comments', on_delete=models.CASCADE, null=True)
     parent = models.ForeignKey('self', verbose_name='Vorisi', on_delete=models.SET_NULL, blank=True, null=True)
 
-    name = models.CharField(verbose_name='Ismi', max_length=100)
-    email = models.EmailField(verbose_name='Email')
     text = models.CharField(verbose_name='Koment', max_length=500)
     date = models.DateTimeField(verbose_name='Sana vaqti', auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return str(self.author)
+
+    def set(self):
+        return reverse('post_detail', kwargs={'pk': id})
 
     class Meta:
-        verbose_name = 'Comment'
-        verbose_name_plural = 'Comments'
+        verbose_name = 'Komment'
+        verbose_name_plural = 'Kommentlar'

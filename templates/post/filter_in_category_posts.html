@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{#{% block title %}{{ title }}{% endblock %}#}
 {% block nav_active %}
   <nav class="tm-nav" id="tm-nav">
     <ul>
@@ -25,7 +26,7 @@
 {% block search %}
   <div class="row tm-row">
     <div class="col-12">
-      <form action="{% url 'posts' %}" class="form-inline tm-mb-80 tm-search-form">
+      <form action="#" class="form-inline tm-mb-80 tm-search-form">
         <input class="form-control tm-search-input" name="search" type="text" placeholder="Search..."
                aria-label="Search">
         <button class="tm-search-button" type="submit">
@@ -57,7 +58,7 @@
           </div>
           <hr>
           <div class="d-flex justify-content-between">
-            <span>{{ post.comments.all|length }} comments</span>
+            <span>36 comments</span>
             <span>by Admin {{ post.author }}</span>
           </div>
         </article>

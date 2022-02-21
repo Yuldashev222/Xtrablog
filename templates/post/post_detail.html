@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{#{% block title %}{{ posts.0.title }}{% endblock %}#}
+{#{% block title %}{{ post.title }}{% endblock %}#}
 {% block nav_active %}
   <nav class="tm-nav" id="tm-nav">
     <ul>
@@ -8,9 +8,9 @@
         <i class="fas fa-home"></i>
         Blog Home
       </a></li>
-      <li class="tm-nav-item active"><a href="{% url 'post' %}" class="tm-nav-link">
+      <li class="tm-nav-item active"><a href="#" class="tm-nav-link">
         <i class="fas fa-pen"></i>
-        Last Post
+        Single Post
       </a></li>
       <li class="tm-nav-item"><a href="{% url 'about' %}" class="tm-nav-link">
         <i class="fas fa-users"></i>
@@ -36,7 +36,7 @@
       <div class="tm-post-full">
         <div class="mb-4">
           <h2 class="pt-2 tm-color-primary tm-post-title">{{ post.title }}</h2>
-          <p class="tm-mb-40">{{ post.date_update }} posted by Admin {{ post.author }}</p>
+          <p class="tm-mb-40">{{ post.date }} posted by Admin {{ post.author }}</p>
           <p>
             {{ post.text }}
           </p>
@@ -48,15 +48,23 @@
           <h2 class="tm-color-primary tm-post-title">Comments</h2>
           <hr class="tm-hr-primary tm-mb-45">
           {% for comment in comments %}
-            {% if forloop.counter <= 3 %}
+            {% if forloop.counter < 4 %}
               <div class="tm-comment tm-mb-45">
                 <figure class="tm-comment-figure">
-                  <img src="{{ comment.author.photo.url }}" width="160" height="160" alt="Image"
-                       class="mb-2 rounded-circle img-thumbnail">
-                  <figcaption class="tm-color-primary text-center">{{ comment.author }}</figcaption>
+                  {% if comment.author.photo %}
+                    <img src="{{ comment.author.photo.url }}" alt="Image" class="mb-2 rounded-circle img-thumbnail"
+                         style="width: 160px; height: 160px">
+                  {% endif %}
+                  {% if comment.name %}
+                    <figcaption class="tm-color-primary text-center">{{ comment.name }}</figcaption>
+                  {% else %}
+                    <figcaption class="tm-color-primary text-center">{{ comment.author.username }}</figcaption>
+                  {% endif %}
                 </figure>
-                <div style="width: 100%">
-                  <p>{{ comment.text }}</p>
+                <div style="width: 100%;">
+                  <p>
+                    {{ comment.text }}
+                  </p>
                   <div class="d-flex justify-content-between">
                     <a href="#" class="tm-color-primary">REPLY</a>
                     <span class="tm-color-primary">{{ comment.date|date:'H :i | d.M.Y' }}</span>
@@ -81,6 +89,7 @@
           {#            </div>#}
           {#            <span class="d-block text-right tm-color-primary">June 21, 2020</span>#}
           {#          </div>#}
+
           <form method="post" class="mb-5 tm-comment-form"> {% csrf_token %}
             <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
             <div class="mb-4">
@@ -99,7 +108,7 @@
         <hr class="mb-3 tm-hr-primary">
         <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
         {% for p in posts %}
-          {% if p != posts.0 and p.category == posts.0.category and forloop.counter <= 3 %}
+          {% if p.title != post.title and forloop.counter < 4 %}
             <a href="#" class="d-block tm-mb-40">
               <figure>
                 <img src="{{ p.image.url }}" alt="Image" class="mb-3 img-fluid">

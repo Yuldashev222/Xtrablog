@@ -4,12 +4,21 @@ from account.models import User
 
 
 class Messages(models.Model):
-    user = models.ForeignKey(User, verbose_name='Foydalanuvchi', on_delete=models.CASCADE(), blank=True)
+    user = models.ForeignKey(User, verbose_name='Foydalanuvchi', on_delete=models.CASCADE, blank=True, null=True)
 
     name = models.CharField(verbose_name='ismi', max_length=100)
     email = models.EmailField(verbose_name='email')
     subject = models.CharField(verbose_name='mavzu', max_length=200)
     message = models.TextField(verbose_name='Murojaat', max_length=2000)
+
+    def __str__(self):
+        if self.user:
+            return f'{self.user}'
+        return self.name
+
+    class Meta:
+        verbose_name = 'Savol va takliflar'
+        verbose_name_plural = 'Savol va takliflar'
 
 
 class AboutUs(models.Model):
@@ -25,4 +34,9 @@ class AboutUs(models.Model):
     twitter_link = models.URLField(blank=True)
     youtube_link = models.URLField(blank=True)
 
+    def __str__(self):
+        return self.title
 
+    class Meta:
+        verbose_name = 'Sayt haqida'
+        verbose_name_plural = 'Sayt haqida'
