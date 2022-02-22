@@ -45,7 +45,8 @@ class Post(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(User, verbose_name='Avtor', on_delete=models.CASCADE, blank=True, null=True)
     post = models.ForeignKey(Post, verbose_name='Post', related_name='comments', on_delete=models.CASCADE, null=True)
-    parent = models.ForeignKey('self', verbose_name='Vorisi', on_delete=models.SET_NULL, blank=True, null=True)
+    parent = models.ForeignKey('self', verbose_name='author of parent comment', on_delete=models.SET_NULL, blank=True,
+                               null=True)
 
     text = models.CharField(verbose_name='Koment', max_length=500)
     date = models.DateTimeField(verbose_name='Sana vaqti', auto_now_add=True)

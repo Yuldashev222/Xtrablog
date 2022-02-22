@@ -10,10 +10,9 @@ from .models import *
 
 def posts(request):
     search_query = request.GET.get('search', '')
-
+    print(search_query)
     if search_query:
-        posts = Post.objects.filter(Q(title__icontains=search_query) | Q(text__icontains=search_query)).order_by(
-            '-date_update')
+        posts = Post.objects.filter(Q(title__icontains=search_query) | Q(text__icontains=search_query)).order_by('-date_update')
 
     else:
         posts = Post.objects.filter(active=True).order_by('-date_update')
@@ -40,7 +39,8 @@ def filter_posts(request, slug):
     category = Category.objects.get(url=slug)
 
     if search_query:
-        fil_posts = Post.objects.filter((Q(title__icontains=search_query) | Q(text__icontains=search_query)), category=category, active=True).order_by('-date_update')
+        fil_posts = Post.objects.filter((Q(title__icontains=search_query) | Q(text__icontains=search_query)),
+                                        category=category, active=True).order_by('-date_update')
 
     else:
         fil_posts = Post.objects.filter(category=category, active=True).order_by('-date_update')
@@ -64,6 +64,7 @@ def post_detail(request, slug):
     post = get_object_or_404(Post, url=slug)
     posts = Post.objects.filter(category=post.category, active=True)
     comments = Comment.objects.filter(post=post).order_by('-date')
+    comments_reply = Comment.objects.filter(post=post, parent=True).order_by('-date')
     comment_form = CommentForm
 
     if request.POST:
@@ -72,6 +73,9 @@ def post_detail(request, slug):
             if comment.is_valid():
 
                 comment = comment.save(commit=False)
+
+                if request.POST.get('parent', None):
+                    comment.parent_id = int(request.POST.get('parent'))
                 comment.author = request.user
                 comment.post = post
 
@@ -85,6 +89,7 @@ def post_detail(request, slug):
         'post': post,
         'posts': posts,
         'comments': comments,
+        'comments_reply': comments_reply,
     }
 
     return render(request, 'post/post_detail.html', context)

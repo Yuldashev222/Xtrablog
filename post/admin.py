@@ -15,4 +15,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'post', 'author', 'parent', 'date']
+    list_display = ['id', 'post', 'parent', 'author', 'date']
