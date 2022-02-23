@@ -12,6 +12,6 @@ urlpatterns = [
     path('category/<slug:slug>/', filter_posts, name='filter_in_category_posts'),
     path('login/', user_login, name='login'),
     path('register/', user_register, name='register'),
-
-    path('logout/', log_out, name='logout')
+    path('logout/', log_out, name='logout'),
+    path('profile/<str:username>/', profile, name='profile'),
 ]

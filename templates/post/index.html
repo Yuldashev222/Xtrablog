@@ -20,8 +20,8 @@
         Contact Us
       </a>
       </li>
-      {% if request.user %}
-        <li class="tm-nav-item"><a href="{% url 'contact' %}" class="tm-nav-link">
+      {% if request.user.is_authenticated %}
+        <li class="tm-nav-item"><a href="{% url 'profile' request.user.username %}" class="tm-nav-link">
           <i class="far fa-comments"></i>
           My profile
         </a></li>
@@ -30,7 +30,9 @@
   </nav>
 {% endblock %}
 {% block search %}
-  <p>{{ request.user }}</p>
+  {% if request.user.is_authenticated %}
+    <p>Welcome  {{ request.user }}</p>
+  {% endif %}
   <div class="row tm-row" style="max-width: 1290px;">
     <div class="col-10">
       <form action="{% url 'posts' %}" class="form-inline tm-mb-80 tm-search-form">
